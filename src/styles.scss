@@ -7,3 +7,9 @@
         @apply flex items-center justify-center
     }
 }
+
+body{
+    --tw-text-opacity: 1;
+    color: rgb(86 92 98 / var(--tw-text-opacity));
+    line-height: 1.4;
+}

@@ -5,4 +5,23 @@
             <div class="text-left line-clamp-1"> Vitor Hugo Souto Oliveira </div>
         </div>
     </div>
+
+    <div class="h--">
+
+    </div>
+
+    <ng-container *ngFor="let note of notes">
+        <div class="flex items-center justify-between p-2 text-sm text-default-300 font-semibold border-default-200 border-b mt-2 ">
+            {{ note.formattedDate }}
+        </div>
+        <div class="bg-default-50 px-4 py-2 rounded-sm">
+           <div class="flex items-center justify-between">
+                <div class="text-default-300 font-medium"> Lorem Ipsum </div>
+                <div class="text-xs text-gray-400"> {{ note.updatedAt | date: 'dd/MM/yyyy HH:mm' }} </div>
+           </div>
+            <div class="mt-2 line-clamp-3">
+                {{ note.content }}
+            </div>
+        </div>
+    </ng-container>
 </div>
