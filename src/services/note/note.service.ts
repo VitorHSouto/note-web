@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
-import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
-import { Note } from './note.types';
+import { environment } from 'src/environments/environment';
+import { CreateNoteRequest, Note } from './note.types';
 
 @Injectable({
   providedIn: 'root'
@@ -18,5 +18,16 @@ export class NoteService {
   list(): Observable<Note[]>{
     return this.httpClient.get<Note[]>(this.baseUrl)
       .pipe()
+  }
+
+  save(req: CreateNoteRequest): Observable<Note>{
+    return this.httpClient.post<Note>(this.baseUrl, req)
+      .pipe(tap(note => {
+        this.syncNotes(note);
+      }))
+  }
+
+  private syncNotes(note: Note): void{
+
   }
 }

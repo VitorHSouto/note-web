@@ -5,6 +5,7 @@ import { RouterModule } from '@angular/router';
 import { noteRoutes } from './notes.routing';
 import { NoteComponent } from './note/note.component';
 import { ListComponent } from './note/list/list.component';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -14,6 +15,7 @@ import { ListComponent } from './note/list/list.component';
   ],
   imports: [
     CommonModule,
+    SharedModule,
     RouterModule.forChild(noteRoutes)
   ]
 })

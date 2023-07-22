@@ -1,22 +1,33 @@
-<div class="p-2 w-80 h-full bg-default-100 border-default-200 border-r shadow">
-    <div class="flex items-center justify-between border-default-200 border-b -m-2 p-4">
-        <div class="flex items-center gap-2 text-default-300 font-medium">
-            <div class="bg-default-200 h-7 w-7 rounded-full flex-center"> V </div>
-            <div class="text-left line-clamp-1"> Vitor Hugo Souto Oliveira </div>
+<div class="w-80 h-full bg-default-100 border-default-200 border-r shadow overflow-auto">
+    <div class="sticky top-0 z-50 bg-default-100 border-default-200 border-b">
+        <div class="flex items-center justify-between border-default-200 border-b py-2 px-4">
+            <div class="flex items-center gap-2 text-default-300 font-medium">
+                <div class="bg-default-200 h-7 w-7 rounded-full flex-center"> V </div>
+                <div class="text-left line-clamp-1"> Vitor Hugo Souto Oliveira </div>
+            </div>
+        </div>
+    
+        <div class="flex-center w-full py-2 bg-default-100 border-default-200">
+          <h-button
+            (onClick)="addNote()"
+            [buttonClass]="'w-72'"
+            [text]="'Adicionar item'"
+          ></h-button>
         </div>
     </div>
+    
 
     <div class="h--">
 
     </div>
 
     <ng-container *ngFor="let note of notes">
-        <div class="flex items-center justify-between p-2 text-sm text-default-300 font-semibold border-default-200 border-b mt-2 ">
+        <div class="flex items-center justify-between p-2 text-sm text-default-300 font-semibold border-default-200 border-b">
             {{ note.formattedDate }}
         </div>
         <div class="bg-default-50 px-4 py-2 rounded-sm">
            <div class="flex items-center justify-between">
-                <div class="text-default-300 font-medium"> Lorem Ipsum </div>
+                <div class="text-default-300 font-medium"> {{ note.title }} </div>
                 <div class="text-xs text-gray-400"> {{ note.updatedAt | date: 'dd/MM/yyyy HH:mm' }} </div>
            </div>
             <div class="mt-2 line-clamp-3">

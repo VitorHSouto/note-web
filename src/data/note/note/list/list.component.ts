@@ -1,7 +1,8 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import * as moment from 'moment';
+import { Subject, takeUntil } from 'rxjs';
 import { NoteService } from 'src/services/note/note.service';
-import { Note, NoteView } from 'src/services/note/note.types';
+import { CreateNoteRequest, Note, NoteView } from 'src/services/note/note.types';
 
 @Component({
   selector: 'note-list',
@@ -16,9 +17,22 @@ export class ListComponent implements OnInit {
   ) {}
 
   notes: NoteView[] = [];
+  private readonly _destroySubject = new Subject<boolean>();
 
   ngOnInit(): void {
     this.loadNotes();
+  }
+
+  addNote(): void{
+    const req: CreateNoteRequest = {
+      title: "Nova nota"
+    }
+
+    this._noteService.save(req)
+      .pipe(takeUntil(this._destroySubject))
+      .subscribe(response => {
+        console.log(response);
+      })
   }
 
   private loadNotes(): void{
