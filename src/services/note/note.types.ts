@@ -15,3 +15,8 @@ export interface CreateNoteRequest {
   title?: string;
   content?: string;
 }
+
+export const defaultCreateNoteRequest : CreateNoteRequest = {
+  title: "Nota teste",
+  content: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit inventore, assumenda officiis doloremque quod perferendis! Sit dolor ad eum sequi, provident dignissimos fugit quis quia quae cum nostrum earum magnam?"
+}

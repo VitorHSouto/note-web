@@ -1,6 +1,7 @@
 import { Routes } from "@angular/router";
-import { NotesComponent } from "./notes.component";
 import { NoteComponent } from "./note/note.component";
+import { NotesComponent } from "./notes.component";
+import { NotesResolver } from "./notes.resolver";
 
 export const noteRoutes: Routes = [
     {
@@ -9,7 +10,10 @@ export const noteRoutes: Routes = [
       children: [
         {
           path:'',
-          component: NoteComponent
+          component: NoteComponent,
+          resolve: {
+            notes: NotesResolver
+          }
         }
       ]
     }

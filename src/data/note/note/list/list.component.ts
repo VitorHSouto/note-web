@@ -2,7 +2,12 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@
 import * as moment from 'moment';
 import { Subject, takeUntil } from 'rxjs';
 import { NoteService } from 'src/services/note/note.service';
-import { CreateNoteRequest, Note, NoteView } from 'src/services/note/note.types';
+import { Note, NoteView, defaultCreateNoteRequest } from 'src/services/note/note.types';
+
+type GroupOfNotes = {
+  title?: string,
+  notes: Note[]
+}
 
 @Component({
   selector: 'note-list',
@@ -14,41 +19,71 @@ export class ListComponent implements OnInit {
   constructor(
     private readonly _noteService: NoteService,
     private readonly _changeDetectorRef: ChangeDetectorRef
-  ) {}
+  ) {
+    moment.locale('pt-br');
+  }
 
-  notes: NoteView[] = [];
+  groupOfNotes: GroupOfNotes[] = [];
+
+  private notes: NoteView[] = [];
+  private mapNotes: Map<string, Note[]> = new Map<string, Note[]>();
+
   private readonly _destroySubject = new Subject<boolean>();
+  private readonly today = new Date();
 
   ngOnInit(): void {
-    this.loadNotes();
+    this.subscribeToNotes();
   }
 
   addNote(): void{
-    const req: CreateNoteRequest = {
-      title: "Nova nota"
-    }
-
-    this._noteService.save(req)
+    this._noteService.save(defaultCreateNoteRequest)
       .pipe(takeUntil(this._destroySubject))
       .subscribe(response => {
         console.log(response);
       })
   }
 
-  private loadNotes(): void{
-    moment.locale('pt-br');
-
-    this._noteService.list()
+  private subscribeToNotes(): void{
+    this._noteService.notes$
       .pipe()
-      .subscribe(notes => {
-        this.notes = notes;
-        this.notes.forEach(note => {
-          const date = moment(note.updatedAt).fromNow();
-          note.formattedDate = date;
-        })
+      .subscribe(notes => this.bindNotes(notes));
+  }
 
-        this._changeDetectorRef.markForCheck();
+  private bindNotes(notes: Note[]): void{
+    this.groupOfNotes = []
+    this.mapNotes = new Map<string, Note[]>();    
+    debugger
+
+    const allNotes = notes ?? [];
+    this.notes = allNotes.sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
+
+    this.notes.forEach(note => {
+      const date = new Date(note.updatedAt);
+      
+      const formattedDate = moment(date).fromNow();
+      note.formattedDate = formattedDate;
+      
+      if(date.toLocaleDateString() === this.today.toLocaleDateString())
+        this.setNoteMap("Hoje", note);
+      else
+        this.setNoteMap(formattedDate, note);
+    })
+      
+    this.mapNotes.forEach((value: Note[], key: string) => {
+      this.groupOfNotes.push({
+        title: key,
+        notes: value
       });
+    });
+
+    console.log(this.groupOfNotes);
+    this._changeDetectorRef.markForCheck();
+  }
+
+  private setNoteMap(key: string, value: Note): void{
+    const currentValue = this.mapNotes.get(key) ?? [];
+    currentValue.push(value);
+    this.mapNotes.set(key, currentValue)
   }
 
 }
