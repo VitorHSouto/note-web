@@ -34,7 +34,6 @@ export class NoteService {
   }
 
   private syncNotes(newNote: Note): void{
-    debugger
     const notes = this._notes.value;
     const oldNote = notes.find(note => note.id == newNote.id);
 

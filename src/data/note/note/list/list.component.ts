@@ -51,8 +51,7 @@ export class ListComponent implements OnInit {
 
   private bindNotes(notes: Note[]): void{
     this.groupOfNotes = []
-    this.mapNotes = new Map<string, Note[]>();    
-    debugger
+    this.mapNotes = new Map<string, Note[]>(); 
 
     const allNotes = notes ?? [];
     this.notes = allNotes.sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
