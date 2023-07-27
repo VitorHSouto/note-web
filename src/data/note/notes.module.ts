@@ -1,21 +1,25 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NotesComponent as NotesComponent } from './notes.component';
+import { NgModule } from '@angular/core';
+import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
-import { noteRoutes } from './notes.routing';
-import { NoteComponent } from './note/note.component';
-import { ListComponent } from './note/list/list.component';
 import { SharedModule } from '../shared/shared.module';
+import { NoteEditComponent } from './note/edit/edit.component';
+import { ListComponent as NoteListComponent } from './note/list/list.component';
+import { NoteComponent } from './note/note.component';
+import { NotesComponent } from './notes.component';
+import { noteRoutes } from './notes.routing';
 
 @NgModule({
   declarations: [
     NotesComponent,
     NoteComponent,
-    ListComponent
+    NoteListComponent,
+    NoteEditComponent
   ],
   imports: [
     CommonModule,
     SharedModule,
+    MatIconModule,
     RouterModule.forChild(noteRoutes)
   ]
 })

@@ -5,10 +5,20 @@ import { NoteService } from "src/services/note/note.service";
 import { Note } from "src/services/note/note.types";
 
 @Injectable({ providedIn: 'root' })
-export class NotesResolver{
-  constructor(private service: NoteService) {}
+export class NotesResolver {
+  constructor(private _service: NoteService) {}
 
   resolve( route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Note[]> {
-    return this.service.list();
+    return this._service.list();
+  }
+}
+
+@Injectable({ providedIn: 'root' })
+export class NoteResolver {
+  constructor(private _service: NoteService) {}
+
+  resolve( route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Note> {
+    const id = route.paramMap.get('id');
+    return this._service.getById(id);
   }
 }

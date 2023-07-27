@@ -5,6 +5,7 @@
                 <div class="bg-default-200 h-7 w-7 rounded-full flex-center"> V </div>
                 <div class="text-left line-clamp-1"> Vitor Hugo Souto Oliveira </div>
             </div>
+            <mat-icon fontIcon="home"></mat-icon>
         </div>
     
         <div class="flex-center w-full py-2 bg-default-100 border-default-200">
@@ -25,17 +26,19 @@
         <div class="flex items-center justify-between p-2 text-sm text-default-300 font-semibold border-default-200 border-b">
             {{ groupOfNotes.title }}
         </div>
-        <div *ngFor="let note of groupOfNotes.notes"
-            class="border-default-200 border-b">
-            <div class="bg-default-50 px-4 py-2 rounded-sm">
-            <div class="flex items-center justify-between">
+        <ng-container *ngFor="let note of groupOfNotes.notes">
+            <div 
+                (click)="openNote(note)"
+                [ngClass]="{'bg-blue-100' : selectedNoteId == note.id}"
+                class="bg-default-50 border-default-200 border-b hover:bg-blue-200 cursor-pointer px-4 py-2 rounded-sm">
+                <div class="flex items-center justify-between">
                     <div class="text-default-300 font-medium"> {{ note.title }} </div>
                     <div class="text-xs text-gray-400"> {{ note.updatedAt | date: 'dd/MM/yyyy HH:mm' }} </div>
-            </div>
+                </div>
                 <div class="mt-2 line-clamp-3">
                     {{ note.content }}
                 </div>
             </div>
-        </div>
+        </ng-container>
     </ng-container>
 </div>

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { BehaviorSubject, Observable, of, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { CreateNoteRequest, Note } from './note.types';
 
@@ -13,24 +13,48 @@ export class NoteService {
     private readonly _httpClient:  HttpClient
   ) { }
 
+  readonly baseUrl: string = `${environment.apiUrl}/note`;
+
+  get selectedNote$() : Observable<Note> {
+    return this._selectedNote.asObservable();
+  }
+
+  private readonly _selectedNote: BehaviorSubject<Note> = new BehaviorSubject<Note>(null);
+
   get notes$() : Observable<Note[]> {
     return this._notes.asObservable();
   }
 
   private readonly _notes: BehaviorSubject<Note[]> = new BehaviorSubject<Note[]>([]);
 
-  readonly baseUrl: string = `${environment.apiUrl}/note`;
+  private alreadyLoaded: boolean = false;
 
-  list(): Observable<Note[]>{
+  list(reload: boolean = false): Observable<Note[]>{
+    if(!reload && this.alreadyLoaded)
+      return of(this._notes.value);
+
     return this._httpClient.get<Note[]>(this.baseUrl)
-      .pipe(tap(notes => this._notes.next(notes)))
+      .pipe(tap(notes => {  
+        this.alreadyLoaded = true;
+        this._notes.next(notes)
+    }))
+  }
+
+  getById(id: string, reload: boolean = false): Observable<Note>{
+    const hasCache = this._notes.value?.find(note => note.id == id);
+    if(!reload && hasCache)
+      return of(hasCache);
+
+    return this._httpClient.get<Note>(`${this.baseUrl}/${id}`)
+      .pipe(tap(note => {
+        this._selectedNote.next(note);
+        this.syncNotes(note);
+      }))
   }
 
   save(req: CreateNoteRequest): Observable<Note>{
     return this._httpClient.post<Note>(this.baseUrl, req)
-      .pipe(tap(note => {
-        this.syncNotes(note);
-      }))
+      .pipe(tap(note => this.syncNotes(note)))
   }
 
   private syncNotes(newNote: Note): void{

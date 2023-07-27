@@ -1,7 +1,7 @@
 import { Routes } from "@angular/router";
 import { NoteComponent } from "./note/note.component";
 import { NotesComponent } from "./notes.component";
-import { NotesResolver } from "./notes.resolver";
+import { NoteResolver, NotesResolver } from "./notes.resolver";
 
 export const noteRoutes: Routes = [
     {
@@ -13,6 +13,14 @@ export const noteRoutes: Routes = [
           component: NoteComponent,
           resolve: {
             notes: NotesResolver
+          }
+        },
+        {
+          path:':id',
+          component: NoteComponent,
+          resolve: {
+            notes: NotesResolver,
+            note: NoteResolver
           }
         }
       ]

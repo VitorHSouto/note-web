@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import * as moment from 'moment';
 import { Subject, takeUntil } from 'rxjs';
 import { NoteService } from 'src/services/note/note.service';
@@ -18,12 +19,14 @@ export class ListComponent implements OnInit {
 
   constructor(
     private readonly _noteService: NoteService,
+    private readonly _router: Router,
     private readonly _changeDetectorRef: ChangeDetectorRef
   ) {
     moment.locale('pt-br');
   }
 
   groupOfNotes: GroupOfNotes[] = [];
+  selectedNoteId: string;
 
   private notes: NoteView[] = [];
   private mapNotes: Map<string, Note[]> = new Map<string, Note[]>();
@@ -33,20 +36,37 @@ export class ListComponent implements OnInit {
 
   ngOnInit(): void {
     this.subscribeToNotes();
+    this.subscribeToSelectedNote();
   }
 
   addNote(): void{
     this._noteService.save(defaultCreateNoteRequest)
       .pipe(takeUntil(this._destroySubject))
       .subscribe(response => {
-        console.log(response);
+        
       })
+  }
+
+  openNote(note: Note): void{
+    this.changeSelectedNote(note);
+    this._router.navigateByUrl(`notes/${note.id}`);
   }
 
   private subscribeToNotes(): void{
     this._noteService.notes$
-      .pipe()
+    .pipe(takeUntil(this._destroySubject))
       .subscribe(notes => this.bindNotes(notes));
+  }
+
+  private subscribeToSelectedNote(): void{
+    this._noteService.selectedNote$
+      .pipe(takeUntil(this._destroySubject))
+      .subscribe(note => this.changeSelectedNote(note));
+  }
+
+  private changeSelectedNote(note: Note): void{
+    this.selectedNoteId = note?.id;
+    this._changeDetectorRef.markForCheck();
   }
 
   private bindNotes(notes: Note[]): void{
@@ -75,7 +95,6 @@ export class ListComponent implements OnInit {
       });
     });
 
-    console.log(this.groupOfNotes);
     this._changeDetectorRef.markForCheck();
   }
 
