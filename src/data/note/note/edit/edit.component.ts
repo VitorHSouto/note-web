@@ -21,8 +21,8 @@ export class NoteEditComponent implements OnInit{
 
   note: Note;
   html = '';
-  toolbar: Toolbar = defaultToolbarOptions;
   
+  readonly _toolbar: Toolbar = defaultToolbarOptions;
   readonly _editor: Editor = new Editor();
   private readonly _destroySubject = new Subject<boolean>();
   private readonly _inputSubject = new Subject<string>();
