@@ -29,8 +29,8 @@
         <ng-container *ngFor="let note of groupOfNotes.notes">
             <div 
                 (click)="openNote(note)"
-                [ngClass]="{'bg-blue-100' : selectedNoteId == note.id}"
-                class="bg-default-50 border-default-200 border-b hover:bg-blue-200 cursor-pointer px-4 py-2 rounded-sm">
+                [ngClass]="{'bg-blue-100': selectedNoteId === note.id, 'bg-default-50': selectedNoteId !== note.id }"
+                class="border-default-200 border-b hover:bg-blue-200 cursor-pointer px-4 py-2 rounded-sm">
                 <div class="flex items-center justify-between">
                     <div class="text-default-300 font-medium"> {{ note.title }} </div>
                     <div class="text-xs text-gray-400"> {{ note.updatedAt | date: 'dd/MM/yyyy HH:mm' }} </div>
