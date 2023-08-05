@@ -1,7 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
+import { NgxEditorModule } from 'ngx-editor';
 import { SharedModule } from '../shared/shared.module';
 import { NoteEditComponent } from './note/edit/edit.component';
 import { ListComponent as NoteListComponent } from './note/list/list.component';
@@ -20,6 +22,9 @@ import { noteRoutes } from './notes.routing';
     CommonModule,
     SharedModule,
     MatIconModule,
+    NgxEditorModule,
+    FormsModule,
+    ReactiveFormsModule,
     RouterModule.forChild(noteRoutes)
   ]
 })

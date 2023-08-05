@@ -57,6 +57,11 @@ export class NoteService {
       .pipe(tap(note => this.syncNotes(note)))
   }
 
+  update(id: string, req: CreateNoteRequest): Observable<Note>{
+    return this._httpClient.put<Note>(`${this.baseUrl}/${id}`, req)
+      .pipe(tap(note => this.syncNotes(note)))
+  }
+
   private syncNotes(newNote: Note): void{
     const notes = this._notes.value;
     const oldNote = notes.find(note => note.id == newNote.id);
