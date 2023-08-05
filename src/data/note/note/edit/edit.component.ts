@@ -59,7 +59,7 @@ export class NoteEditComponent implements OnInit{
 
     this._noteService.update(this.note.id, req)
       .pipe( takeUntil(this._destroySubject) )
-      .subscribe(note => console.log(note))
+      .subscribe()
   }
 
   private subscribeToRouteChanges(): void{

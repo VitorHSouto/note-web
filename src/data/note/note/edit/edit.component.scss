@@ -1,15 +1,57 @@
 .NgxEditor__Wrapper {
     border-color: rgb(201 214 223 / var(--tw-border-opacity));
+    border: none !important;
+    height: 100%;
 }
 
 .NgxEditor__MenuBar {
+    margin-top: 0px;
+    margin-bottom: 10px;
     background: inherit;
     color: inherit;
-    background-color: rgb(249 252 255 / var(--tw-bg-opacity)) !important; 
+    border: none !important;
+    background-color: rgb(249 252 255 / var(--tw-bg-opacity)) !important;
 }
 
 .NgxEditor {
     background: inherit;
     color: inherit;
     background-color: rgb(249 252 255 / var(--tw-bg-opacity)) !important;
+    height: calc(100% - 60px);
+}
+
+.NgxEditor__Content {
+    height: 100%;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin: 0.67em 0 !important;
+    font-weight: bold !important;
+}
+
+h1 {
+    font-size: 2em !important;
+}
+
+h2 {
+    font-size: 1.5em !important;
+}
+
+h3 {
+    font-size: 1.17em !important;
+}
+
+ul {
+    list-style-type: disc !important;
+    margin-left: 2rem !important;
+}
+
+ol {
+    list-style-type: decimal !important;
+    margin-left: 2rem !important;
 }
