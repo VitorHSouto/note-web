@@ -47,7 +47,7 @@ export class NoteEditComponent implements OnInit{
 
   private subscribeToInputChanges(): void{
     this._inputSubject
-      .pipe(debounceTime(1000), distinctUntilChanged())
+      .pipe(debounceTime(500), distinctUntilChanged())
       .subscribe(content => this.updateNoteContent(content))
   }
 

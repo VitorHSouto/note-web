@@ -42,9 +42,7 @@ export class ListComponent implements OnInit {
   addNote(): void{
     this._noteService.save(defaultCreateNoteRequest)
       .pipe(takeUntil(this._destroySubject))
-      .subscribe(response => {
-        
-      })
+      .subscribe(note =>  this.openNote(note) )
   }
 
   openNote(note: Note): void{

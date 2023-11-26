@@ -7,16 +7,8 @@ module.exports = {
     "./src/**/*.{js,ts,jsx,tsx,html}"
   ],
   theme: {
-    extend: {
-      spacing: {
-        '128': '32rem',
-        '144': '36rem',
-      },
-      borderRadius: {
-        '4xl': '2rem',
-      }
-    },
     colors: {
+      primary: colors.indigo,
       'default': {
         50: '#f9fcff',
         100: '#f0f5f9',
@@ -28,6 +20,11 @@ module.exports = {
       blue: colors.lightBlue,
       red: colors.rose,
       pink: colors.fuchsia,
+      black: colors.black,
+      white: colors.white,
+      emerald: colors.emerald,
+      indigo: colors.indigo,
+      yellow: colors.yellow,
     },
     fontFamily: {
       sans: ["Inter var", "Segoe UI","Helvetica Neue","Noto Sans","Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji"],

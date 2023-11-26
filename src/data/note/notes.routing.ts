@@ -9,14 +9,14 @@ export const noteRoutes: Routes = [
       component: NotesComponent,
       children: [
         {
-          path:'',
+          path: '',
           component: NoteComponent,
           resolve: {
             notes: NotesResolver
           }
         },
         {
-          path:':id',
+          path: ':id',
           component: NoteComponent,
           resolve: {
             notes: NotesResolver,

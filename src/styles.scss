@@ -22,8 +22,8 @@ $note-web-warn: mat.define-palette(mat.$red-palette);
 // theming systems such as "color" or "typography".
 $note-web-theme: mat.define-light-theme((
   color: (
-    primary: $note-web-primary,
-    accent: $note-web-accent,
+    primary: $note-web-accent,
+    accent: $note-web-primary,
     warn: $note-web-warn,
   )
 ));
@@ -131,4 +131,53 @@ ul {
 ol {
   list-style-type: decimal !important;
   margin-left: 2rem !important;
+}
+
+.mdc-text-field--filled:not(.mdc-text-field--disabled){
+  background-color: inherit !important;
+}
+
+.mat-mdc-form-field-focus-overlay{
+  background-color: inherit !important;
+}
+
+.h-button{
+  border-radius: 9999px !important;
+  background-color: rgb(99 102 241) !important;
+}
+
+.gradient-background {
+  background: linear-gradient(80deg,#6366f1,#3033b3,#107078);
+  background-size: 180% 180%;
+  animation: gradient-animation 15s ease infinite;
+}
+
+@keyframes gradient-animation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.main-gradient-background {
+  background: linear-gradient(80deg,#f9fcff,#e9f1f3,#ccd1d2);
+  background-size: 180% 180%;
+  animation: main-gradient-animation 15s ease infinite;
+}
+
+@keyframes main-gradient-animation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
